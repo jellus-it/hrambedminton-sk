@@ -60,7 +60,7 @@ export class AuthConstruct extends Construct {
 
     const postConfirmationLambda = new lambdaNodejs.NodejsFunction(this, 'PostConfirmationLambda', {
       functionName: `HBPostConfirmation-${getSuffix(this)}`,
-      runtime: lambda.Runtime.NODEJS_24_X,
+      runtime: lambda.Runtime.NODEJS_26_X,
       architecture: lambda.Architecture.ARM_64,
       memorySize: 256,
       timeout: cdk.Duration.seconds(10),

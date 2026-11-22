@@ -41,7 +41,7 @@ export class McpConstruct extends Construct {
 
     const mcpServerLambda = new lambdaNodejs.NodejsFunction(this, 'McpServerLambda', {
       functionName: `HBMcpServer-${getSuffix(this)}`,
-      runtime: lambda.Runtime.NODEJS_24_X,
+      runtime: lambda.Runtime.NODEJS_26_X,
       architecture: lambda.Architecture.ARM_64,
       memorySize: 512,
       // API Gateway cuts the request at ~30s anyway
