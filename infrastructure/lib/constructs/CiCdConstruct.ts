@@ -36,7 +36,7 @@ export class CiCdConstruct extends Construct {
           'token.actions.githubusercontent.com:aud': 'sts.amazonaws.com',
         },
         StringLike: {
-          'token.actions.githubusercontent.com:sub': 'repo:juffalow/hrambedminton-sk:*',
+          'token.actions.githubusercontent.com:sub': 'repo:jellus-it/hrambedminton-sk:*',
         },
       }),
       roleName: `hb-github-actions-cdk-deployment-role-${getSuffix(this)}`,
@@ -108,7 +108,7 @@ export class CiCdConstruct extends Construct {
           'token.actions.githubusercontent.com:aud': 'sts.amazonaws.com',
         },
         StringLike: {
-          'token.actions.githubusercontent.com:sub': 'repo:juffalow/hrambedminton-sk:*',
+          'token.actions.githubusercontent.com:sub': 'repo:jellus-it/hrambedminton-sk:*',
         },
       }),
       roleName: `hb-github-actions-webapp-deployment-role-${getSuffix(this)}`,
