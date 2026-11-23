@@ -4,9 +4,16 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'webapp/**'
+      - '.github/workflows/webapp.yml'
   pull_request:
     branches:
       - main
+    paths:
+      - 'webapp/**'
+      - '.github/workflows/webapp.yml'
+  # Path filters do not apply to releases, so a release always deploys.
   release:
     types:
       - published
