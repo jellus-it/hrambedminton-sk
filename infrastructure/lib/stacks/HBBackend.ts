@@ -3,6 +3,9 @@ import { Construct } from 'constructs';
 import { ApiConstruct } from '../constructs/ApiConstruct';
 import { AuthConstruct } from '../constructs/AuthConstruct';
 import { DatabaseConstruct } from '../constructs/DatabaseConstruct';
+import { EventBusConstruct } from '../constructs/EventBusConstruct';
+import { SecretsConstruct } from '../constructs/SecretsConstruct';
+import { SlackNotificationsConstruct } from '../constructs/SlackNotificationsConstruct';
 import { McpConstruct } from '../constructs/McpConstruct';
 
 export interface HBBackendProps extends StackProps {
@@ -15,13 +18,23 @@ export class HBBackend extends Stack {
 
     const database = new DatabaseConstruct(this, 'HBDatabaseConstruct');
 
+    const eventBus = new EventBusConstruct(this, 'HBEventBusConstruct');
+
+    const secrets = new SecretsConstruct(this, 'HBSecretsConstruct');
+
     const auth = new AuthConstruct(this, 'HBAuthConstruct', {
       table: database.table,
+      eventBus: eventBus.eventBus,
     });
 
     const api = new ApiConstruct(this, 'HBApiConstruct', {
       userPool: auth.userPool,
       table: database.table,
+    });
+
+    new SlackNotificationsConstruct(this, 'HBSlackNotificationsConstruct', {
+      secret: secrets.secrets,
+      eventBus: eventBus.eventBus,
     });
 
     new McpConstruct(this, 'HBMcpConstruct', {
