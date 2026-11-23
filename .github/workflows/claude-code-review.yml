@@ -22,10 +22,22 @@ jobs:
     permissions:
       contents: read
       pull-requests: read
-      issues: read
+      issues: write # to add the reaction to the trigger comment
       id-token: write
 
     steps:
+      # Show on the "/claude-review" comment that the review has started.
+      # Only for users with write access, the same people the action itself lets run the review.
+      - name: React to the trigger comment
+        if: contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          gh api --method POST
+          "repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions"
+          -f content=eyes
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
