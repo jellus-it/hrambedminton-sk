@@ -4,6 +4,8 @@ import * as cognito from 'aws-cdk-lib/aws-cognito';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as lambdaNodejs from 'aws-cdk-lib/aws-lambda-nodejs';
+import * as logs from 'aws-cdk-lib/aws-logs';
+import * as events from 'aws-cdk-lib/aws-events';
 import * as path from 'path';
 import { Construct } from 'constructs';
 import { getSuffix } from '../utils';
@@ -11,6 +13,7 @@ import { tableIndexesNagFindingId } from './DatabaseConstruct';
 
 export interface AuthConstructProps {
   table: dynamodb.Table;
+  eventBus: events.EventBus;
 }
 
 export class AuthConstruct extends Construct {
@@ -64,14 +67,22 @@ export class AuthConstruct extends Construct {
       architecture: lambda.Architecture.ARM_64,
       memorySize: 256,
       timeout: cdk.Duration.seconds(10),
-      entry: path.join(__dirname, '../lambdas/post-confirmation.ts'),
+      entry: path.join(__dirname, '../../src/postConfirmation.ts'),
       handler: 'handler',
       environment: {
+        POWERTOOLS_SERVICE_NAME: 'hrambedminton-sk',
         TABLE_NAME: props.table.tableName,
+        EVENT_BUS_NAME: props.eventBus.eventBusName,
       },
+      logGroup: new logs.LogGroup(this, 'HBPostConfirmationLogGroup', {
+        logGroupName: `hb/lambda/HBPostConfirmation-${getSuffix(this)}`,
+        retention: logs.RetentionDays.TWO_WEEKS,
+        removalPolicy: cdk.RemovalPolicy.DESTROY,
+      }),
     });
 
     props.table.grantWriteData(postConfirmationLambda);
+    props.eventBus.grantPutEventsTo(postConfirmationLambda);
 
     Validations.of(postConfirmationLambda).acknowledge({
       id: 'AwsSolutions-IAM4[Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole]',

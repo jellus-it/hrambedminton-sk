@@ -56,6 +56,7 @@ export class McpConstruct extends Construct {
         AUTH_DOMAIN_URL: props.userPoolDomain.baseUrl(),
       },
       logGroup: new logs.LogGroup(this, 'McpServerLogGroup', {
+        logGroupName: `hb/lambda/HBMcpServer-${getSuffix(this)}`,
         retention: logs.RetentionDays.TWO_WEEKS,
         removalPolicy: cdk.RemovalPolicy.DESTROY,
       }),
