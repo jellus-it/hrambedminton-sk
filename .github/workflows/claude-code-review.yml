@@ -7,6 +7,28 @@ on:
     types: [created]
 
 jobs:
+  # Shows on the "/claude-review" comment that the review has started. A separate job, so that only this
+  # small step gets write access, not the job that runs Claude on the pull request content.
+  # Only for users with write access, the same people the action itself lets run the review.
+  react:
+    if: |
+      github.event.issue.pull_request &&
+      contains(github.event.comment.body, '/claude-review') &&
+      contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      # Reactions on comments of a pull request need pull-requests: write (issues: write works only on issues)
+      pull-requests: write
+    steps:
+      - name: React to the trigger comment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          gh api --method POST
+          "repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions"
+          -f content=eyes
+
   claude-review:
     # Only on pull requests (not issues) and only when the comment asks for it.
     # The action itself also checks that the commenter has write access to the repository.
@@ -22,22 +44,10 @@ jobs:
     permissions:
       contents: read
       pull-requests: read
-      issues: write # to add the reaction to the trigger comment
+      issues: read
       id-token: write
 
     steps:
-      # Show on the "/claude-review" comment that the review has started.
-      # Only for users with write access, the same people the action itself lets run the review.
-      - name: React to the trigger comment
-        if: contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)
-        continue-on-error: true
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: >-
-          gh api --method POST
-          "repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions"
-          -f content=eyes
-
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
