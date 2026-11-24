@@ -42,7 +42,7 @@
     "@sentry/react": "^10.10.0",
     "@urql/exchange-auth": "^3.0.0",
     "aws-amplify": "^6.15.4",
-    "i18next": "^25.3.2",
+    "i18next": "^26.3.4",
     "i18next-browser-languagedetector": "^8.2.0",
     "i18next-http-backend": "^3.0.2",
     "isbot": "^5",
