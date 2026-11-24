@@ -10,7 +10,11 @@
       },
       "oidc": {
         "GitHubProviderArn": "arn:aws:iam::793033584233:oidc-provider/token.actions.githubusercontent.com"
-      }
+      },
+      "email": {
+        "fromAddress": "matej@jellus.it"
+      },
+      "webappUrl": "d2mf8w1ll36csd.cloudfront.net"
     },
     "production": {
       "account": {
@@ -19,7 +23,12 @@
       },
       "oidc": {
         "GitHubProviderArn": "arn:aws:iam::139397500068:oidc-provider/token.actions.githubusercontent.com"
-      }
+      },
+      "email": {
+        "fromAddress": "noreply@hrambedminton.sk",
+        "domainName": "hrambedminton.sk"
+      },
+      "webappUrl": "https://hrambedminton.sk"
     }
   },
   "hosted-zone:account=139397500068:domainName=hrambedminton.sk:region=us-east-1": {

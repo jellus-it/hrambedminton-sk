@@ -23,6 +23,8 @@ type Event @aws_api_key @aws_cognito_user_pools {
   time: AWSTime!
   timeZone: String!
   startsAt: AWSDateTime!
+  "Length of the match in minutes. Null for matches created before the duration was added, and for guest events."
+  duration: Int
   maxPlayers: Int!
   place: String!
   court: String!
@@ -90,6 +92,8 @@ input CreateEventInput {
   date: AWSDate!
   time: AWSTime!
   timeZone: String
+  "Length of the match in minutes, 15 to 480."
+  duration: Int!
   maxPlayers: Int!
   place: String!
   court: String!

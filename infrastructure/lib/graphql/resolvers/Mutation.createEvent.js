@@ -32,6 +32,10 @@ export function request(ctx) {
     util.error('maxPlayers must be between 2 and 32', 'ValidationError');
   }
 
+  if (input.duration < 15 || input.duration > 480) {
+    util.error('duration must be between 15 and 480 minutes', 'ValidationError');
+  }
+
   // Date and time are wall-clock time at the venue, so an offset would be ambiguous.
   // AWSDate and AWSTime accept one, so reject it here.
   if (!util.matches('^\\d{4}-\\d{2}-\\d{2}$', input.date)) {
@@ -70,6 +74,7 @@ export function request(ctx) {
     time,
     timeZone,
     startsAt: util.time.epochMilliSecondsToISO8601(startsAtMillis),
+    duration: input.duration,
     maxPlayers: input.maxPlayers,
     place: input.place,
     court: input.court,

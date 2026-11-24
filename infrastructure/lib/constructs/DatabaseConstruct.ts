@@ -30,6 +30,8 @@ export class DatabaseConstruct extends Construct {
         type: dynamodb.AttributeType.STRING,
       },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+      // New items are sent to the event bus by an EventBridge Pipe (EmailNotificationsConstruct)
+      stream: dynamodb.StreamViewType.NEW_IMAGE,
     });
 
     // All items of one entity type (type#user, type#event, type#eventPlayer), sorted by date. Used for listing.

@@ -26,8 +26,11 @@
     "@aws-sdk/client-dynamodb": "^3.1148.0",
     "@aws-sdk/client-eventbridge": "^3.1175.0",
     "@aws-sdk/client-secrets-manager": "^3.1175.0",
+    "@aws-sdk/client-sesv2": "^3.1175.0",
+    "@aws-sdk/util-dynamodb": "^3.996.9",
     "@modelcontextprotocol/sdk": "1.32.1",
     "aws-jwt-verify": "^5.2.1",
+    "ical-generator": "^11.1.4",
     "zod": "^4"
   },
   "devDependencies": {

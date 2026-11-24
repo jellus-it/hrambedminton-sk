@@ -7,9 +7,14 @@ import { EventBusConstruct } from '../constructs/EventBusConstruct';
 import { SecretsConstruct } from '../constructs/SecretsConstruct';
 import { SlackNotificationsConstruct } from '../constructs/SlackNotificationsConstruct';
 import { McpConstruct } from '../constructs/McpConstruct';
+import { EmailConfig, EmailConstruct } from '../constructs/EmailConstruct';
+import { EmailNotificationsConstruct } from '../constructs/EmailNotificationsConstruct';
 
 export interface HBBackendProps extends StackProps {
   stage?: string;
+  email: EmailConfig;
+  /** Webapp origin used in links in emails, without a trailing slash */
+  webappUrl: string;
 }
 
 export class HBBackend extends Stack {
@@ -21,6 +26,8 @@ export class HBBackend extends Stack {
     const eventBus = new EventBusConstruct(this, 'HBEventBusConstruct');
 
     const secrets = new SecretsConstruct(this, 'HBSecretsConstruct');
+
+    const email = new EmailConstruct(this, 'HBEmailConstruct', props.email);
 
     const auth = new AuthConstruct(this, 'HBAuthConstruct', {
       table: database.table,
@@ -35,6 +42,13 @@ export class HBBackend extends Stack {
     new SlackNotificationsConstruct(this, 'HBSlackNotificationsConstruct', {
       secret: secrets.secrets,
       eventBus: eventBus.eventBus,
+    });
+
+    new EmailNotificationsConstruct(this, 'HBEmailNotificationsConstruct', {
+      table: database.table,
+      eventBus: eventBus.eventBus,
+      email,
+      webappUrl: props.webappUrl,
     });
 
     new McpConstruct(this, 'HBMcpConstruct', {

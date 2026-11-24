@@ -13,6 +13,7 @@ const CREATE_EVENT_MUTATION = `
       time
       timeZone
       startsAt
+      duration
       place
       court
       maxPlayers
@@ -30,6 +31,7 @@ interface CreateEventResult {
     time: string;
     timeZone: string;
     startsAt: string;
+    duration: number;
     place: string;
     court: string;
     maxPlayers: number;
@@ -58,6 +60,7 @@ export function registerCreateEventTool(server: McpServer, config: GraphQLConfig
           .string()
           .optional()
           .describe('IANA time zone of the venue, e.g. Europe/Bratislava. Defaults to Europe/Bratislava'),
+        duration: z.number().int().min(15).max(480).describe('Length of the event in minutes (15-480)'),
         place: z.string().min(1).max(128).describe('Venue / place name'),
         court: z.string().min(1).max(64).describe('Court name or number'),
         maxPlayers: z.number().int().min(2).max(32).describe('Maximum number of players (2-32)'),
@@ -81,6 +84,7 @@ export function registerCreateEventTool(server: McpServer, config: GraphQLConfig
           time: event.time,
           timeZone: event.timeZone,
           startsAt: event.startsAt,
+          duration: event.duration,
           place: event.place,
           court: event.court,
           maxPlayers: event.maxPlayers,

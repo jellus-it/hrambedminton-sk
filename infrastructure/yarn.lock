@@ -137,6 +137,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@aws-sdk/client-sesv2@npm:^3.1175.0":
+  version: 3.1175.0
+  resolution: "@aws-sdk/client-sesv2@npm:3.1175.0"
+  dependencies:
+    "@aws-sdk/core": "npm:^3.981.1"
+    "@aws-sdk/credential-provider-node": "npm:^3.972.98"
+    "@aws-sdk/signature-v4-multi-region": "npm:^3.996.52"
+    "@aws-sdk/types": "npm:^3.975.1"
+    "@smithy/core": "npm:^3.40.0"
+    "@smithy/fetch-http-handler": "npm:^5.8.1"
+    "@smithy/node-http-handler": "npm:^4.14.2"
+    "@smithy/types": "npm:^4.20.0"
+    tslib: "npm:^2.6.2"
+  checksum: 10c0/598d728532059e36cf4baae05a0d69a8f36693ca703aae316f57732c7d1d36e6fa64744325faf2817b024a62730d0e54ee1a90d0b76d70b671d95ee0998d21a0
+  languageName: node
+  linkType: hard
+
 "@aws-sdk/core@npm:^3.978.1":
   version: 3.978.1
   resolution: "@aws-sdk/core@npm:3.978.1"
@@ -553,6 +570,17 @@ __metadata:
     "@smithy/types": "npm:^4.20.0"
     tslib: "npm:^2.6.2"
   checksum: 10c0/74075c70c528f64af375e69361bf2b04886e1c23de3fac2be1e15b6fc048f2873c3d8fa00ec01ba0d36210e4db0037ea6feabec641e80377a9741a8118290333
+  languageName: node
+  linkType: hard
+
+"@aws-sdk/util-dynamodb@npm:^3.996.9":
+  version: 3.996.9
+  resolution: "@aws-sdk/util-dynamodb@npm:3.996.9"
+  dependencies:
+    tslib: "npm:^2.6.2"
+  peerDependencies:
+    "@aws-sdk/client-dynamodb": ^3.1111.0
+  checksum: 10c0/3f19524435023ddc747a6b196b44f4ca43081a023dd827597c95a851ef9d7ba29f24181ad4194964af43b64a11f679a351c68de1bf22fdbc820d4f09103298d6
   languageName: node
   linkType: hard
 
@@ -3077,6 +3105,8 @@ __metadata:
     "@aws-sdk/client-dynamodb": "npm:^3.1148.0"
     "@aws-sdk/client-eventbridge": "npm:^3.1175.0"
     "@aws-sdk/client-secrets-manager": "npm:^3.1175.0"
+    "@aws-sdk/client-sesv2": "npm:^3.1175.0"
+    "@aws-sdk/util-dynamodb": "npm:^3.996.9"
     "@eslint/js": "npm:^9.39.2"
     "@modelcontextprotocol/sdk": "npm:1.32.1"
     "@types/aws-lambda": "npm:^8.10.159"
@@ -3089,6 +3119,7 @@ __metadata:
     dpdm: "npm:^4.3.0"
     esbuild: "npm:^0.28.2"
     eslint: "npm:^10.8.1"
+    ical-generator: "npm:^11.1.4"
     license-checker-rseidelsohn: "npm:^5.0.1"
     prettier: "npm:^3.9.10"
     ts-node: "npm:^10.9.2"
@@ -3144,6 +3175,41 @@ __metadata:
   version: 1.1.1
   resolution: "human-signals@npm:1.1.1"
   checksum: 10c0/18810ed239a7a5e23fb6c32d0fd4be75d7cd337a07ad59b8dbf0794cb0761e6e628349ee04c409e605fe55344716eab5d0a47a62ba2a2d0d367c89a2b4247b1e
+  languageName: node
+  linkType: hard
+
+"ical-generator@npm:^11.1.4":
+  version: 11.1.4
+  resolution: "ical-generator@npm:11.1.4"
+  peerDependencies:
+    "@touch4it/ical-timezones": ">=1.6.0"
+    "@types/luxon": ">= 1.26.0"
+    "@types/mocha": ">= 8.2.1"
+    dayjs: ">= 1.10.0"
+    luxon: ">= 1.26.0"
+    moment: ">= 2.29.0"
+    moment-timezone: ">= 0.5.33"
+    rrule: ">= 2.6.8"
+  peerDependenciesMeta:
+    "@touch4it/ical-timezones":
+      optional: true
+    "@types/luxon":
+      optional: true
+    "@types/mocha":
+      optional: true
+    "@types/node":
+      optional: true
+    dayjs:
+      optional: true
+    luxon:
+      optional: true
+    moment:
+      optional: true
+    moment-timezone:
+      optional: true
+    rrule:
+      optional: true
+  checksum: 10c0/dc2fec7f1684896db66b822f9b64cfc74304af1cc866925cd1a9e71317ed21fa6e4b1233f454428febe95d5e886911bece37ad6b4e9db6438fd70ad23fda1eed
   languageName: node
   linkType: hard
 

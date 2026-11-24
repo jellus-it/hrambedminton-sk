@@ -20,6 +20,8 @@ new HBBackend(app, 'HBBackendStack', {
   env,
   description: 'Hram Bedminton Backend Stack',
   stage,
+  email: app.node.tryGetContext('environment')[stage].email,
+  webappUrl: app.node.tryGetContext('environment')[stage].webappUrl,
 });
 
 const certificateStack =

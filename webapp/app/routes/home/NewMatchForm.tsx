@@ -33,6 +33,10 @@ export const newMatchFormSchema = z.object({
     .number()
     .min(2, { message: 'Maximálny počet hráčov musí byť aspoň 2!' })
     .max(32, { message: 'Maximálny počet hráčov môže byť maximálne 32!' }),
+  duration: z.coerce
+    .number()
+    .min(15, { message: 'Trvanie zápasu musí byť aspoň 15 minút!' })
+    .max(480, { message: 'Trvanie zápasu môže byť maximálne 480 minút!' }),
   date: z.string().min(1).max(10),
   time: z.string().min(1).max(10),
   place: z
@@ -44,6 +48,9 @@ export const newMatchFormSchema = z.object({
     .min(1, { message: 'Kurt(y) musí mať aspoň 1 znak!' })
     .max(64, { message: 'Kurt(y) môže mať maximálne 64 znakov!' }),
 });
+
+// Match length in minutes
+const DURATION_OPTIONS = [30, 60, 90, 120, 150, 180];
 
 const CreateEventMutation = `
   mutation CreateEvent($input: CreateEventInput!) {
@@ -63,6 +70,7 @@ export default function NewMatchForm() {
       const description = state.get('description') as string;
       const eventType = state.get('eventType') as string;
       const maxPlayers = Number(state.get('maxPlayers') as string);
+      const duration = Number(state.get('duration') as string);
       const date = state.get('date') as string;
       const time = state.get('time') as string;
       const place = state.get('place') as string;
@@ -74,6 +82,7 @@ export default function NewMatchForm() {
           description,
           eventType,
           maxPlayers,
+          duration,
           date,
           time,
           place,
@@ -87,6 +96,7 @@ export default function NewMatchForm() {
           description,
           eventType,
           maxPlayers,
+          duration,
           date,
           time,
           place,
@@ -106,6 +116,7 @@ export default function NewMatchForm() {
         name,
         description,
         maxPlayers,
+        duration,
         date,
         time,
         place,
@@ -116,7 +127,7 @@ export default function NewMatchForm() {
       const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
       const result = await createEvent({
-        input: { name, description, eventType, maxPlayers, date, time, timeZone, place, court },
+        input: { name, description, eventType, maxPlayers, duration, date, time, timeZone, place, court },
       });
 
       if (result.error) {
@@ -126,6 +137,7 @@ export default function NewMatchForm() {
           description,
           eventType,
           maxPlayers,
+          duration,
           date,
           time,
           place,
@@ -145,6 +157,7 @@ export default function NewMatchForm() {
         description,
         eventType,
         maxPlayers,
+        duration,
         date,
         time,
         place,
@@ -158,6 +171,7 @@ export default function NewMatchForm() {
       description: '',
       eventType: '',
       maxPlayers: 0,
+      duration: 0,
       date: '',
       time: '',
       place: '',
@@ -203,6 +217,30 @@ export default function NewMatchForm() {
             <Input placeholder="4" />
             <FieldError />
           </TextField>
+
+          <Select
+            isRequired
+            name="duration"
+            defaultValue={state.duration ? String(state.duration) : undefined}
+            fullWidth
+          >
+            <Label>Trvanie zápasu</Label>
+            <Select.Trigger>
+              <Select.Value />
+              <Select.Indicator />
+            </Select.Trigger>
+            <Select.Popover>
+              <ListBox>
+                {DURATION_OPTIONS.map((minutes) => (
+                  <ListBox.Item key={minutes} id={String(minutes)} textValue={`${minutes} minút`}>
+                    {minutes} minút
+                    <ListBox.ItemIndicator />
+                  </ListBox.Item>
+                ))}
+              </ListBox>
+            </Select.Popover>
+            <FieldError />
+          </Select>
         </div>
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
