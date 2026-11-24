@@ -16,6 +16,13 @@ updates:
         applies-to: version-updates
         patterns:
           - "*"
+      security-fixes:
+        applies-to: security-updates
+        patterns:
+          - "*"
+        update-types:
+          - "patch"
+          - "minor"
     commit-message:
       prefix: "chore(npm)"
     labels:
