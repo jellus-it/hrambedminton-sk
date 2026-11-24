@@ -33,6 +33,7 @@ export function request(ctx) {
           time: event.time,
           timeZone: event.timeZone,
           startsAt: event.startsAt,
+          duration: event.duration,
           maxPlayers: event.maxPlayers,
           place: event.place,
           court: event.court,
